@@ -1,0 +1,50 @@
+# This is a Terraform-managed file; manual changes will be overwritten.
+# see https://github.com/workloads/github-organization/blob/main/templates/workflows/superlinter.tftpl.yml
+
+---
+
+name: "Code Quality: Super-Linter"
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+
+# see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions: read-all
+
+jobs:
+  super-linter:
+    name: Super-Linter
+
+    # only run if workflows are enabled
+    if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
+
+    # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+    permissions:
+      statuses: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # see https://github.com/actions/checkout/releases/tag/v3.5.2
+      - name: Checkout Repository
+        uses: "actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab" # ref: `tags/v3.5.2`
+        with:
+          # full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      # see https://github.com/super-linter/super-linter/releases/tag/v5.0.0
+      - name: Lint Code with Super-Linter
+        uses: "super-linter/super-linter/slim@45fc0d88288beee4701c62761281edfee85655d7" # ref: `tags/v5.0.0`
+        env:
+          DEFAULT_BRANCH: "main"
+          DISABLE_ERRORS: false
+          GITHUB_CUSTOM_API_URL: "https://api.github.com"
+          GITHUB_DOMAIN: "github.com"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          IGNORE_GENERATED_FILES: true
+          IGNORE_GITIGNORED_FILES: true
+          MULTI_STATUS: true
+          SUPPRESS_POSSUM: true
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_NATURAL_LANGUAGE: true
