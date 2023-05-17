@@ -45,6 +45,7 @@ jobs:
           IGNORE_GENERATED_FILES: true
           IGNORE_GITIGNORED_FILES: true
           MULTI_STATUS: true
+          NATURAL_LANGUAGE_CONFIG_FILE: ".textlint.yml"
           SUPPRESS_POSSUM: true
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_NATURAL_LANGUAGE: true
