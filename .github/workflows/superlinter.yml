@@ -47,5 +47,5 @@ jobs:
           MULTI_STATUS: true
           NATURAL_LANGUAGE_CONFIG_FILE: ".textlint.yml"
           SUPPRESS_POSSUM: true
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
           VALIDATE_NATURAL_LANGUAGE: true
