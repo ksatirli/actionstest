@@ -16,9 +16,6 @@ jobs:
   super-linter:
     name: Super-Linter
 
-    # only run if workflows are enabled
-    if: ${{ vars.ENABLE_WORKFLOWS == 'true' }}
-
     # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
     permissions:
       statuses: write
@@ -49,16 +46,3 @@ jobs:
           SUPPRESS_POSSUM: true
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_NATURAL_LANGUAGE: true
-
-  super-linter-inactive:
-    name: Super-Linter (inactive)
-
-    # only run if workflows are enabled
-    if: $${{ vars.ENABLE_WORKFLOWS != 'true' }}
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # see https://github.com/${checkout.owner}/${checkout.repository}/releases/tag/${checkout.version}
-      - name: Checkout Repository
-        run: echo "::warning ::Workflow is not currently active."
